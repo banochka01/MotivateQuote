@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">QuoteWidget</string>
+    <string name="app_description">Мотивационные цитаты и виджет дня</string>
+    <string name="widget_name">QuoteWidget</string>
+</resources>

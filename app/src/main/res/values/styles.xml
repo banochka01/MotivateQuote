@@ -1,0 +1,6 @@
+<resources>
+    <style name="Theme.QuoteWidget" parent="android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:windowSplashScreenBackground">@color/launcher_bg</item>
+        <item name="android:fontFamily">sans</item>
+    </style>
+</resources>
