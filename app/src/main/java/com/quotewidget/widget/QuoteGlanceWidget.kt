@@ -1,6 +1,7 @@
 package com.quotewidget.widget
 
 import android.content.Context
+import android.content.Intent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.DpSize
@@ -17,7 +18,6 @@ import androidx.glance.appwidget.action.actionRunCallback
 import androidx.glance.appwidget.action.actionStartActivity
 import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.provideContent
-import androidx.glance.appwidget.update
 import androidx.glance.appwidget.updateAll
 import androidx.glance.background
 import androidx.glance.layout.Alignment
@@ -78,10 +78,16 @@ suspend fun updateAllQuoteWidgets(context: Context) {
 
 @Composable
 private fun QuoteWidgetContent(quote: Quote) {
+    val openAppIntent = Intent(Intent.ACTION_MAIN).apply {
+        setClassName("com.quotewidget", MainActivity::class.java.name)
+        addCategory(Intent.CATEGORY_LAUNCHER)
+        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+    }
+
     Column(
         modifier = GlanceModifier
             .fillMaxSize()
-            .background(ColorProvider(Color(0xFFF7F2EA), Color(0xFF191714)))
+            .background(ColorProvider(Color(0xFFF7F2EA)))
             .cornerRadius(24.dp)
             .padding(16.dp),
         verticalAlignment = Alignment.Vertical.CenterVertically
@@ -89,7 +95,7 @@ private fun QuoteWidgetContent(quote: Quote) {
         Text(
             text = "QUOTEWIDGET / ${quote.category.uppercase()}",
             style = TextStyle(
-                color = ColorProvider(Color(0xFF7B654B), Color(0xFFD8C0A3)),
+                color = ColorProvider(Color(0xFF7B654B)),
                 fontWeight = FontWeight.Bold
             ),
             maxLines = 1
@@ -98,7 +104,7 @@ private fun QuoteWidgetContent(quote: Quote) {
         Text(
             text = quote.text,
             style = TextStyle(
-                color = ColorProvider(Color(0xFF25211C), Color(0xFFF4EFE7)),
+                color = ColorProvider(Color(0xFF25211C)),
                 fontWeight = FontWeight.Bold
             ),
             maxLines = 4
@@ -106,7 +112,7 @@ private fun QuoteWidgetContent(quote: Quote) {
         Spacer(GlanceModifier.height(8.dp))
         Text(
             text = "- ${quote.author}",
-            style = TextStyle(color = ColorProvider(Color(0xFF6F6256), Color(0xFFCFC4B8))),
+            style = TextStyle(color = ColorProvider(Color(0xFF6F6256))),
             maxLines = 1
         )
         Spacer(GlanceModifier.height(10.dp))
@@ -116,7 +122,7 @@ private fun QuoteWidgetContent(quote: Quote) {
         ) {
             Button(
                 text = "Открыть",
-                onClick = actionStartActivity<MainActivity>()
+                onClick = actionStartActivity(openAppIntent)
             )
             Button(
                 text = "Еще",
